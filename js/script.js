@@ -6,14 +6,28 @@
 }); */
 
 const titleClickHandler = function (event) {
-    console.log('Link was clicked!');
-    console.log(event);
+    const clickedElement = this;
 
-    /* Remove class 'active' from all links */
+    /* [DONE] Remove class 'active' from all links */
+    const activeLinks = document.querySelectorAll('.titles a.active');
 
-    /* Add class 'active' to the clicked link */
+    for (let activeLink of activeLinks) {
+        activeLink.classList.remove('active');
+        console.log('function titleClickHandler remove activeLink: ', activeLink);
+    }
 
-    /* Remove class 'active' from all articles */
+    /* [DONE] Add class 'active' to the clicked link */
+    clickedElement.classList.add('active');
+    console.log('function titleClickHandler clickedElement: ', clickedElement);
+
+    /* [DONE] Remove class 'active' from all articles */
+    const activeArticles = document.querySelectorAll('.post.active');
+
+    for (let activeArticle of activeArticles) {
+        activeArticle.classList.remove('active');
+        console.log('function titleClickHandler remove activeArticle: ', activeArticle);
+    }
+
 
     /* Pick 'href' attribute from the clicked link */
 
