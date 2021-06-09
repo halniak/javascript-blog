@@ -1,11 +1,7 @@
 'use strict';
 
-/* document.getElementById('test-button').addEventListener('click', function () {
-    const links = document.querySelectorAll('.titles a');
-    console.log('links:', links);
-}); */
-
 const titleClickHandler = function (event) {
+    event.preventDefault();
     const clickedElement = this;
 
     /* [DONE] Remove class 'active' from all links */
@@ -28,13 +24,16 @@ const titleClickHandler = function (event) {
         console.log('function titleClickHandler remove activeArticle: ', activeArticle);
     }
 
+    /* [DONE] Pick 'href' attribute from the clicked link */
+    const linkAddress = clickedElement.getAttribute('href').replace('#', '');
+    console.log('function titleClickHandler pick "href" attribute from ckickedElement: ', linkAddress);
 
-    /* Pick 'href' attribute from the clicked link */
+    /* [DONE] Match 'href' attribute with id of article */
+    const activeArticle = document.getElementById(linkAddress);
+    console.log('function titleClickHandler match activeArticle ID with "href" attribute of active link: ', activeArticle);
 
-    /* Match 'href' attribute with id of article */
-
-    /* Add class 'active' to the selected article */
-
+    /* [DONE] Add class 'active' to the selected article */
+    activeArticle.classList.add('active');
 }
 
 const links = document.querySelectorAll('.titles a');
