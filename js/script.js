@@ -153,18 +153,18 @@ const articleSelector = '.post',
 
 };
 
-  /* const addClickListenersToTags = function () {
-    console.log('function addClickListenersToTags called'); */
+const addClickListenersToTags = function () {
+  console.log('function addClickListenersToTags called');
 
-    /* find all links */
-    /* let allTagsLinks = document.querySelectorAll(tagLinksSelector); */
+  /* find all links */
+  let allTagsLinks = document.querySelectorAll(tagLinksSelector);
 
-    /* for each link add tagClickHandler click listener */
-    /* for (let tagLink of allTagsLinks) {
-      tagLink.addEventListener('click', tagClickHandler);
-      console.log('tagLink: ', tagLink);
-    } */
-  };
+  /* for each link add tagClickHandler click listener */
+  for (let tagLink of allTagsLinks) {
+    tagLink.addEventListener('click', tagClickHandler);
+    console.log('tagLink: ', tagLink);
+  }
+};
 
 generateTitleLinks();
 generateTags();
