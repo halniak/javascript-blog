@@ -4,6 +4,7 @@ const articleSelector = '.post',
   titleListSelector = '.titles',
   articleTagsSelector = '.post-tags .list',
   tagLinksSelector = '.post-tags a',
+  authorLinksSelector = '.post-author',
   consoleFunctionStyle = 'background: #000; font-weight: 700; color: #fff;';
 {
   const titleClickHandler = function (event) {
@@ -46,7 +47,6 @@ const articleSelector = '.post',
 
   const generateTitleLinks = function (customSelector = '') {
     console.log('%c function generateTitleLinks called ', consoleFunctionStyle);
-    console.log('customSelector: ', customSelector);
 
     /* [DONE] remove links upon refresh */
     let titleList = document.querySelector(titleListSelector);
@@ -55,7 +55,8 @@ const articleSelector = '.post',
 
     /* [DONE] for each article */
     const articles = document.querySelectorAll(articleSelector + customSelector);
-    console.log('atricles: ', articles);
+    console.log('articleSelector + customSelector: ', articleSelector + customSelector);
+    console.log('selected atricles: ', articles);
 
     let articleLink = '';
     for (let article of articles) {
@@ -77,7 +78,6 @@ const articleSelector = '.post',
     console.log('new titleList innerHTML: ', titleList.innerHTML);
 
     const links = document.querySelectorAll('.titles a');
-    //console.log('const links: ', links);
     for (let link of links) {
       link.addEventListener('click', titleClickHandler);
     }
@@ -128,7 +128,12 @@ const articleSelector = '.post',
     }
   };
 
-  function tagClickHandler(event) {
+  const generateAuthors = function () {
+    console.log('%c function generateAuthors called ', consoleFunctionStyle);
+
+  }
+
+  const tagClickHandler = function (event) {
     console.log('%c function tagClickHandler called ', consoleFunctionStyle
     );
     /* [DONE] prevent default action for this event */
@@ -175,7 +180,11 @@ const articleSelector = '.post',
     /* [DONE] execute function "generateTitleLinks" with article selector as argument */
     generateTitleLinks('[data-tags~="' + tag + '"]');
 
-  }
+  };
+
+  const authorClickHandler = function (event) {
+    console.log('%c function authorClickHandler called ', consoleFunctionStyle);
+  };
 
   const addClickListenersToTags = function () {
     console.log('%c function addClickListenersToTags called ', consoleFunctionStyle);
@@ -189,9 +198,23 @@ const articleSelector = '.post',
     }
   };
 
+  const addClickListenersToAuthors = function () {
+    console.log('%c function addClickListenersToAuthors called ', consoleFunctionStyle);
+
+    /* [DONE] find all links */
+    let allAuthorsLinks = document.querySelectorAll(authorLinksSelector);
+
+    /* [DONE] for each link add authorClickHandler click listener */
+    for (let authorLink of allAuthorsLinks) {
+      authorLink.addEventListener('click', authorClickHandler);
+      console.log('each author link: ', authorLink);
+    }
+  };
+
   generateTitleLinks();
   generateTags();
+  generateAuthors();
   addClickListenersToTags();
-
+  addClickListenersToAuthors();
 
 }
