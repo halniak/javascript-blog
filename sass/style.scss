@@ -108,7 +108,10 @@ body {
   display: none;
 }
 
-.post-author {
+.post-author a {
+  &.active {
+    font-weight: bold;
+  }
   font-style: italic;
 }
 
