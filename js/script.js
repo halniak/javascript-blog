@@ -3,8 +3,12 @@ const articleSelector = '.post',
   titleSelector = '.post-title',
   titleListSelector = '.titles',
   tagsSelector = '.post-tags .list',
-  tagLinksSelector = '.post-tags a',
+  tagsListSelector = '.tags.list',
+  tagLinksSelector = '.post-tags a, .tags a',
   authorSelector = '.post-author',
+  authorsListSelector = '.authors.list',
+  cloudClassCount = 4,
+  cloudClassPrefix = 'tag-size-',
   consoleFunctionStyle = 'background: #000; font-weight: 700; color: #fff;';
 {
   const titleClickHandler = function (event) {
@@ -55,7 +59,6 @@ const articleSelector = '.post',
     /* [DONE] for each article */
     const articles = document.querySelectorAll(articleSelector + customSelector);
     console.log('articleSelector + customSelector: ', articleSelector + customSelector);
-    console.log('selected atricles: ', articles);
 
     let articleLink = '';
     for (let article of articles) {
@@ -74,7 +77,6 @@ const articleSelector = '.post',
     }
 
     titleList.innerHTML = articleLink;
-    console.log('new titleList innerHTML: ', titleList.innerHTML);
 
     const links = document.querySelectorAll('.titles a');
     for (let link of links) {
@@ -82,27 +84,61 @@ const articleSelector = '.post',
     }
   };
 
+  const calculateTagsParams = function (tags) {
+    console.log('%c function calculateTagsParams called', consoleFunctionStyle);
+
+    /* [DONE] loop over values of argument */
+    let numberOfOccurences = [];
+    for (const tag in tags) {
+
+      /* [DONE] append values to a list */
+      numberOfOccurences.push(tags[tag]);
+    };
+
+    /* [DONE] find maximum and minimum in a list */
+    let tagsParams = {};
+    tagsParams['min'] = Math.min(...numberOfOccurences);
+    tagsParams['max'] = Math.max(...numberOfOccurences);
+    console.log('numbers of tags occurences: ', tags)
+
+    return tagsParams;
+  };
+
+  const calculateTagClass = function (count, tagsParams) {
+    console.log('%c function calculateTagClass called', consoleFunctionStyle);
+
+    /* [DONE] set default tag class number for count = tagsParams[min] */
+    let tagClassNumber = 1;
+
+    /* [DONE] if count is not equal to tagsParams.min calculate tagClassNumber */
+    if (count !== tagsParams.min) {
+      tagClassNumber = Math.round(count * cloudClassCount / tagsParams.max);
+    }
+
+    console.log('tagClassNumber: ', tagClassNumber);
+    return tagClassNumber;
+  };
+
   const generateTags = function () {
     console.log('%c function generateTags called ', consoleFunctionStyle);
 
+    /* [DONE] create a new variable allTags with an empty object */
+    let allTags = {};
+
     /*[DONE] find all articles */
     const articles = document.querySelectorAll(articleSelector);
-    console.log('articles: ', articles);
 
     /*[DONE] for every article: */
     for (let article of articles) {
-      console.log('article: ', article);
 
       /*[DONE] find tags wrapper */
       const tagsWrapper = article.querySelector(tagsSelector);
-      console.log('tagsWrapper: ', tagsWrapper);
 
-      /*[DONE] make html variable with empty string */
-      let html = '';
+      /*[DONE] make tagLinks variable with empty string */
+      let tagLinks = '';
 
       /*[DONE] get tags from data-tags attribute */
       const articleTags = article.getAttribute('data-tags');
-      console.log('data-tags: ', articleTags);
 
       /*[DONE] split tags into array */
       const tagsArray = articleTags.split(' ');
@@ -112,15 +148,47 @@ const articleSelector = '.post',
       for (let tag of tagsArray) {
 
         /*[DONE] generate HTML of the link */
-        const linkHTML = '<li><a href="#tag-' + tag + '">' + tag + '</a></li>';
+        const tagLink = '<li><a href="#tag-' + tag + '">' + tag + '</a></li>';
 
-        /*[DONE] add generated code to html variable */
-        html += linkHTML;
+        /*[DONE] append generated code to tagLinks variable */
+        tagLinks += tagLink;
+
+        /* check if this link is NOT already in allTags */
+        if (!allTags[tag]) {
+          /* add new tag to allTags object */
+          allTags[tag] = 1;
+
+        }
+        else {
+          allTags[tag]++;
+        }
+
       }
       /* [DONE] insert HTML of all the links into the tags wrapper */
-      tagsWrapper.innerHTML = html;
+      tagsWrapper.innerHTML = tagLinks;
       console.log('html var: ', tagsWrapper.innerHTML);
     }
+
+    /* [DONE] find list of all tags in right column */
+    const tagList = document.querySelector(tagsListSelector);
+    console.log('tagList: ', tagList);
+
+    /* [DONE] add code from allTags to tagList */
+    const tagsParams = calculateTagsParams(allTags);
+    console.log('function calculateTagsParams returned tagsParams: ', tagsParams);
+
+    let allTagsHTML = '';
+
+    for (let tag in allTags) {
+      console.log('tagHTML: ', tag);
+
+      /* [DONE] generate code of a link and add it to allTagsHTML */
+      allTagsHTML += '<li><a href="#tag-' + tag + '" class="' + cloudClassPrefix + calculateTagClass(allTags[tag], tagsParams) + '">' + tag + ' (' + allTags[tag] + ') </a></li>';
+    }
+
+    /* [DONE] add HTML from allTagsHTML to tagList.innerHTML */
+    console.log('allTags object: ', allTags);
+    tagList.innerHTML = allTagsHTML
   };
 
   const generateAuthors = function () {
@@ -134,7 +202,6 @@ const articleSelector = '.post',
 
       /* [DONE] find authorWrapper */
       const authorWrapper = article.querySelector(authorSelector);
-      console.log('authorWrapper: ', authorWrapper);
 
       /* [DONE] extract author-tag attribute from authorWrapper */
       let authorTag = article.getAttribute('author-tag');
