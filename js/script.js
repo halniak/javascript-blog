@@ -6,7 +6,7 @@ const articleSelector = '.post',
   tagsListSelector = '.tags.list',
   tagLinksSelector = '.post-tags a, .tags a',
   authorSelector = '.post-author',
-  authorsListSelector = '.authors.list',
+  authorListSelector = '.authors.list',
   cloudClassCount = 4,
   cloudClassPrefix = 'tag-size-',
   consoleFunctionStyle = 'background: #000; font-weight: 700; color: #fff;';
@@ -128,7 +128,7 @@ const articleSelector = '.post',
     /*[DONE] find all articles */
     const articles = document.querySelectorAll(articleSelector);
 
-    /*[DONE] for every article: */
+    /*[DONE] for each article: */
     for (let article of articles) {
 
       /*[DONE] find tags wrapper */
@@ -157,17 +157,15 @@ const articleSelector = '.post',
         if (!allTags[tag]) {
           /* add new tag to allTags object */
           allTags[tag] = 1;
-
         }
         else {
           allTags[tag]++;
         }
-
       }
       /* [DONE] insert HTML of all the links into the tags wrapper */
       tagsWrapper.innerHTML = tagLinks;
       console.log('html var: ', tagsWrapper.innerHTML);
-    }
+    };
 
     /* [DONE] find list of all tags in right column */
     const tagList = document.querySelector(tagsListSelector);
@@ -187,12 +185,14 @@ const articleSelector = '.post',
     }
 
     /* [DONE] add HTML from allTagsHTML to tagList.innerHTML */
-    console.log('allTags object: ', allTags);
     tagList.innerHTML = allTagsHTML
   };
 
   const generateAuthors = function () {
     console.log('%c function generateAuthors called ', consoleFunctionStyle);
+
+    /* [DONE] create a new variable allAuthors with an empty object */
+    let allAuthors = {};
 
     /* [DONE] find all articles */
     const articles = document.querySelectorAll(articleSelector);
@@ -204,17 +204,46 @@ const articleSelector = '.post',
       const authorWrapper = article.querySelector(authorSelector);
 
       /* [DONE] extract author-tag attribute from authorWrapper */
-      let authorTag = article.getAttribute('author-tag');
-      console.log('author-tag attribute: ', authorTag);
+      let author = article.getAttribute('author-tag');
+      console.log('author-tag attribute: ', author);
 
       /* [DONE] generate HTML of the link */
       let authorLink = '';
-      authorLink = '<a href="#author-' + authorTag + '">by ' + authorTag + '</a>';
+      authorLink = '<a href="#author-' + author + '">by ' + author + '</a>';
 
-      /* [DONE] assign generated HTML to authorWrapper.innerHTML */
+      /* [DONE] check if authorLink is NOT already in allAuthors */
+      if (!allAuthors[author]) {
+        allAuthors[author] = 1;
+      }
+      else {
+        allAuthors[author]++;
+      }
+
+      /* [DONE] insert HTML of author link into authors wrapper */
       authorWrapper.innerHTML = authorLink;
       console.log('authorWrapper.innerHTML: ', authorWrapper.innerHTML);
     };
+    console.log('allAuthors: ', allAuthors);
+
+    /* [DONE] find a list of all authors in right column */
+    const authorList = document.querySelector(authorListSelector);
+    console.log('authorList: ', authorList);
+
+    let allAuthorsHTML = '';
+
+    /* [DONE] for each author in allAuthors */
+    for (const author in allAuthors) {
+      console.log('author: ', author);
+
+
+      /* [DONE] generate HTML of a link and number of articles and append it to
+      allAuthorsHTML */
+      allAuthorsHTML += '<li><a href="#author-' + author + '">' + author + ' (' + allAuthors[author] + ') ' + '</a></li>';
+    }
+
+    /* [DONE] add HTML from allAuthorsHTML to authorsList.innerHTML */
+    authorList.innerHTML = allAuthorsHTML;
+
   }
 
   const tagClickHandler = function (event) {
@@ -324,7 +353,7 @@ const articleSelector = '.post',
     console.log('%c function addClickListenersToAuthors called ', consoleFunctionStyle);
 
     /* [DONE] find all links */
-    let allAuthorsLinks = document.querySelectorAll(authorSelector + ' a');
+    let allAuthorsLinks = document.querySelectorAll(authorSelector + ' a, ' + authorListSelector + ' a');
 
     /* [DONE] for each link add authorClickHandler click listener */
     for (let authorLink of allAuthorsLinks) {
