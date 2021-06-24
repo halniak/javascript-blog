@@ -4,7 +4,7 @@
 
 $color-light: #fff;
 $color-dark: #444;
-$color-link: #2C3A47;
+$color-link: #112538;
 
 $font-logo: 'Sacramento', cursive;
 $font-header: 'Oswald', sans-serif;
@@ -22,6 +22,9 @@ body {
       font-weight: bold;
     }
     text-decoration: none;
+  }
+  a.active {
+    font-weight: bold;
     color: $color-link;
   }
   background: $color-light;
@@ -85,9 +88,6 @@ body {
 /* Lists */
 
 .list {
-  .active {
-    font-weight: bold;
-  }
   list-style-type: none;
   margin: 0;
   padding: 0;
@@ -112,22 +112,18 @@ body {
 .tags {
   .tag-size-1 {
     font-size: 70%;
-    color: #ED4C67;
   }
 
   .tag-size-2 {
     font-size: 80%;
-    color: #B53471;
   }
 
   .tag-size-3 {
-    font-size: 90%;
-    color: #833471;
+    font-size: 100%;
   }
 
   .tag-size-4 {
-    font-size: 100%;
-    color: #6F1E51;
+    font-size: 120%;
   }
 
   li {
@@ -145,9 +141,6 @@ body {
 }
 
 .post-author a {
-  &.active {
-    font-weight: bold;
-  }
   font-style: italic;
 }
 

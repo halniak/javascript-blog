@@ -23,7 +23,7 @@
         </aside>
         <section class="posts">
           <article class="post active" id="article-1" author-tag="Adam Mickiewicz" data-tags="design tutorials">
-            <h3 class="post-title">Article 1</h3>
+            <h3 class="post-title">Pan Tadeusz</h3>
             <p class="post-author"><a href="#" aria-hidden="true"></a></p>
             <div class="post-content">
               <p>Duis non dolor efficitur erat interdum fringilla a lobortis dolor. Aenean in massa
@@ -47,7 +47,7 @@
             </div>
           </article>
           <article class="post" id="article-2" author-tag="Gall Anonim" data-tags="news code">
-            <h3 class="post-title">Article 2</h3>
+            <h3 class="post-title">Nad Niemnem</h3>
             <p class="post-author"><a href="#" aria-hidden="true"></a></p>
             <div class="post-content">
               <p>Phasellus sollicitudin, arcu vel iaculis ullamcorper, quam leo viverra orci, et faucibus
@@ -70,8 +70,8 @@
               </ul>
             </div>
           </article>
-          <article class="post" id="article-3" author-tag="Gall Anonim" data-tags="news reviews design">
-            <h3 class=" post-title">Article 3</h3>
+          <article class="post" id="article-3" author-tag="Adam Mickiewicz" data-tags="news reviews design">
+            <h3 class=" post-title">Persefona</h3>
             <p class="post-author"><a href="#" aria-hidden="true"></a></p>
             <div class="post-content">
               <p>Mauris vel pellentesque turpis, ac sodales nisl. Quisque iaculis mi velit, ut convallis
@@ -93,7 +93,7 @@
             </div>
           </article>
           <article class="post" id="article-4" author-tag="Witold Gombrowicz" data-tags="tutorials code design">
-            <h3 class="post-title">Article 4</h3>
+            <h3 class="post-title">Upupieni</h3>
             <p class="post-author"><a href="#" aria-hidden="true"></a></p>
             <div class="post-content">
               <p>Morbi vel cursus nulla, vel varius mauris. Suspendisse sed elit sit amet risus faucibus
@@ -117,7 +117,7 @@
             </div>
           </article>
           <article class="post" id="article-5" author-tag="Adam Mickiewicz" data-tags="design reviews">
-            <h3 class="post-title">Article 5</h3>
+            <h3 class="post-title">Mrówki III</h3>
             <p class="post-author"><a href="#" aria-hidden="true"></a></p>
             <div class="post-content">
               <p>Suspendisse sem eros, euismod condimentum arcu ac, consequat fermentum orci. Nam
@@ -139,7 +139,7 @@
             </div>
           </article>
           <article class="post" id="article-6" author-tag="Max Colonko" data-tags="reviews code">
-            <h3 class="post-title">Article 6</h3>
+            <h3 class="post-title">Wieści z USA</h3>
             <p class="post-author"><a href="#" aria-hidden="true"></a></p>
             <div class="post-content">
               <p>Donec posuere iaculis ante sed hendrerit. Lorem ipsum dolor sit amet, consectetur
@@ -163,7 +163,7 @@
             </div>
           </article>
           <article class="post" id="article-7" author-tag="Gall Anonim" data-tags="code news">
-            <h3 class="post-title">Article 7</h3>
+            <h3 class="post-title">Makbet</h3>
             <p class="post-author"><a href="#" aria-hidden="true"></a></p>
             <div class="post-content">
               <p>Donec eleifend mauris ac nisl fermentum, ac fermentum turpis dignissim. Aliquam diam
@@ -186,7 +186,7 @@
             </div>
           </article>
           <article class="post" id="article-8" author-tag="Adam Mickiewicz" data-tags="news design tutorials">
-            <h3 class="post-title">Article 8</h3>
+            <h3 class="post-title">Dziady X</h3>
             <p class="post-author"><a href="#" aria-hidden="true"></a></p>
             <div class="post-content">
               <p>Praesent quis imperdiet erat. Curabitur tempor sapien a interdum malesuada. Proin libero
@@ -211,7 +211,7 @@
             </div>
           </article>
           <article class="post" id="article-9" author-tag="Gall Anonim" data-tags="news tutorials">
-            <h3 class="post-title">Article 9</h3>
+            <h3 class="post-title">Galanimacje</h3>
             <p class="post-author"><a href="#" aria-hidden="true"></a></p>
             <div class="post-content">
               <p>Tam et facilisis purus. Donec vulputate est quis lobortis posuere. Nunc vitae lorem ut
@@ -235,7 +235,7 @@
             </div>
           </article>
           <article class="post" id="article-10" author-tag="Witold Gombrowicz" data-tags="code design news tutorials">
-            <h3 class="post-title">Article 10</h3>
+            <h3 class="post-title">Ferdydurke</h3>
             <p class="post-author"><a href="#" aria-hidden="true"></a></p>
             <div class="post-content">
               <p>Aliquam erat volutpat. Ut non eleifend lectus. Donec suscipit tellus tempor, ornare dui
@@ -305,7 +305,28 @@
     <li><a href="#{{ id }}"><span>{{ title }}</span></a></li>
   </script>
 
+  <script id="template-author-link" type="text/x-handlebars-template">
+    <a href="#author-{{ author_name }}"><span>by {{ author_name }}</span></a>
+  </script>
+
+  <script id="template-tag-link" type="text/x-handlebars-template">
+    <li><a href="#tag-{{ id }}"><span>{{ id }}</span></a></li>
+  </script>
+
+  <script id="template-tag-cloud-link" type="text/x-handlebars-template">
+    {{#each tags}}
+    <li><a href="#tag-{{ tag }}" class="tag-size-{{ className }}"><span>{{ tag }}</span></a></li>
+    {{/each}}
+  </script>
+
+  <script id="template-author-list-link" type="text/x-handlebars-template">
+    {{#each authors}}
+    <li><a href="#author-{{ author }}"><span>{{ author }} ({{ count }})</span></a></li>
+    {{/each}}
+  </script>
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.1.0/handlebars.min.js"></script>
+
   <script src="js/script.js" async defer></script>
 </body>
 
