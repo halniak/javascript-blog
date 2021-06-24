@@ -1,4 +1,18 @@
 'use strict';
+
+const templates = {
+  articleLink: Handlebars.compile(document.querySelector('#template-article-link').innerHTML)
+};
+
+
+
+
+
+
+
+
+
+
 const articleSelector = '.post',
   titleSelector = '.post-title',
   titleListSelector = '.titles',
@@ -60,23 +74,20 @@ const articleSelector = '.post',
     const articles = document.querySelectorAll(articleSelector + customSelector);
     console.log('articleSelector + customSelector: ', articleSelector + customSelector);
 
-    let articleLink = '';
     for (let article of articles) {
       /* [DONE] write its ID to a const */
       const articleID = article.getAttribute('id');
-      //console.log('ID\'s of each article: ', articleID);
 
       /* [DONE] find an element containing acticle's title and write it to a
       const */
       const articleTitle = article.querySelector(titleSelector).innerHTML;
-      //console.log('Title of each article: ', articleTitle);
 
-      /* [DONE] generate html code of a link and and append it to a variable */
-      articleLink += '<li><a href="#' + articleID + '"><span>' + articleTitle + '</span></a></li>';
-      //console.log('each articleLink: ', articleLink);
+      /* [DONE] generate html code of a link and append it to a variable */
+      const articleLinkData = { id: articleID, title: articleTitle };
+      const articleLink = templates.articleLink(articleLinkData);
+
+      titleList.innerHTML += articleLink;
     }
-
-    titleList.innerHTML = articleLink;
 
     const links = document.querySelectorAll('.titles a');
     for (let link of links) {
@@ -93,13 +104,13 @@ const articleSelector = '.post',
 
       /* [DONE] append values to a list */
       numberOfOccurences.push(tags[tag]);
-    };
+    }
 
     /* [DONE] find maximum and minimum in a list */
     let tagsParams = {};
     tagsParams['min'] = Math.min(...numberOfOccurences);
     tagsParams['max'] = Math.max(...numberOfOccurences);
-    console.log('numbers of tags occurences: ', tags)
+    console.log('numbers of tags occurences: ', tags);
 
     return tagsParams;
   };
@@ -165,7 +176,7 @@ const articleSelector = '.post',
       /* [DONE] insert HTML of all the links into the tags wrapper */
       tagsWrapper.innerHTML = tagLinks;
       console.log('html var: ', tagsWrapper.innerHTML);
-    };
+    }
 
     /* [DONE] find list of all tags in right column */
     const tagList = document.querySelector(tagsListSelector);
@@ -185,7 +196,7 @@ const articleSelector = '.post',
     }
 
     /* [DONE] add HTML from allTagsHTML to tagList.innerHTML */
-    tagList.innerHTML = allTagsHTML
+    tagList.innerHTML = allTagsHTML;
   };
 
   const generateAuthors = function () {
@@ -222,7 +233,7 @@ const articleSelector = '.post',
       /* [DONE] insert HTML of author link into authors wrapper */
       authorWrapper.innerHTML = authorLink;
       console.log('authorWrapper.innerHTML: ', authorWrapper.innerHTML);
-    };
+    }
     console.log('allAuthors: ', allAuthors);
 
     /* [DONE] find a list of all authors in right column */
@@ -244,7 +255,7 @@ const articleSelector = '.post',
     /* [DONE] add HTML from allAuthorsHTML to authorsList.innerHTML */
     authorList.innerHTML = allAuthorsHTML;
 
-  }
+  };
 
   const tagClickHandler = function (event) {
     console.log('%c function tagClickHandler called ', consoleFunctionStyle
@@ -273,7 +284,7 @@ const articleSelector = '.post',
 
       /* [DONE] remove class active */
       activeTag.classList.remove('active');
-    };
+    }
 
     /* [DONE] find all tag links with "href" attribute equal to the "href" constant */
     const matchingTagsLinks = document.querySelectorAll(tagLinksSelector + '[href="' + href + '"]');
@@ -285,7 +296,7 @@ const articleSelector = '.post',
       /* [DONE] add class active */
       matchingTagsLink.classList.add('active');
       console.log('add class active to matchingTagLink: ', matchingTagsLink);
-    };
+    }
 
     /* [DONE] execute function "generateTitleLinks" with article selector as argument */
     generateTitleLinks('[data-tags~="' + tag + '"]');
@@ -317,7 +328,7 @@ const articleSelector = '.post',
       /* [DONE] remove class active */
       activeAuthorLink.classList.remove('active');
       console.log('activeAuthorLink: ', activeAuthorLink);
-    };
+    }
 
     /* [DONE] find all author articles */
     const authorLinks = document.querySelectorAll(articleSelector + '[author-tag="' + authorName + '"] ' + authorSelector + ' a');
@@ -330,7 +341,7 @@ const articleSelector = '.post',
       /* [DONE] add class active to article link */
       authorLink.classList.add('active');
       console.log('add class active to article link: ', authorLink);
-    };
+    }
 
     /* [DONE] execute function "generateTitleLinks" with article selector as argument */
     generateTitleLinks('[author-tag="' + authorName + '"]');
